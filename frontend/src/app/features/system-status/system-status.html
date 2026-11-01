@@ -1,0 +1,17 @@
+<main class="status">
+  <h1>FundTrack</h1>
+
+  @if (loading()) {
+    <p>Checking API…</p>
+  } @else if (failed()) {
+    <p class="status__message status__message--error" role="alert">
+      Could not reach the API. Is it running on port 5049?
+    </p>
+  } @else if (health(); as current) {
+    <p class="status__message status__message--ok">API status: {{ current.status }}</p>
+    <p>Environment: {{ current.environment }}</p>
+    <p>Checked at: {{ current.checkedAtUtc | date: 'medium' }}</p>
+  }
+
+  <button type="button" [disabled]="loading()" (click)="check()">Check again</button>
+</main>

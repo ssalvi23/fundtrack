@@ -1,0 +1,18 @@
+.status {
+  max-width: 32rem;
+  margin: 4rem auto;
+  padding: 0 1rem;
+  font-family: system-ui, sans-serif;
+
+  &__message {
+    font-weight: 600;
+
+    &--ok {
+      color: #1a7f37;
+    }
+
+    &--error {
+      color: #b42318;
+    }
+  }
+}
