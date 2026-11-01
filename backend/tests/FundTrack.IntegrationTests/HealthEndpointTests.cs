@@ -1,11 +1,10 @@
-using System.Net;
+﻿using System.Net;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace FundTrack.IntegrationTests;
 
-public sealed class HealthEndpointTests(WebApplicationFactory<Program> factory)
-    : IClassFixture<WebApplicationFactory<Program>>
+public sealed class HealthEndpointTests(FundTrackApiFactory factory)
+    : IClassFixture<FundTrackApiFactory>
 {
     private const string AllowedOrigin = "http://localhost:4200";
 

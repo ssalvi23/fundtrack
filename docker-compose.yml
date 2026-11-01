@@ -1,0 +1,22 @@
+# Local infrastructure. Redis, RabbitMQ, Seq and Jaeger join this file in later phases.
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: fundtrack-sql
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer # Free for development and testing, never for production.
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Copy .env.example to .env and set a password}
+    ports:
+      - "127.0.0.1:1433:1433" # Bound to this machine only, not the whole network.
+    volumes:
+      - fundtrack-sql-data:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -Q "SELECT 1" -b -o /dev/null
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+volumes:
+  fundtrack-sql-data:
